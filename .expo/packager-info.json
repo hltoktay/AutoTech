@@ -1,0 +1,9 @@
+{
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://hk-khj.anonymous.autotech.exp.direct",
+  "packagerNgrokUrl": "https://packager.hk-khj.anonymous.autotech.exp.direct",
+  "ngrokPid": 17006,
+  "devToolsPort": 19002,
+  "packagerPort": 19003,
+  "packagerPid": 16996
+}
