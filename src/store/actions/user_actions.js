@@ -1,4 +1,4 @@
-import { SIGNUP, SIGNIN } from "../types";
+import { SIGNUP, SIGNIN, AUTOSIGNIN } from "../types";
 import axios from "axios";
 import {
   SIGN_UP,
@@ -61,9 +61,32 @@ export function signIn(data) {
   };
 }
 
+export const autoSignIn = refToken => {
+  const request = axios({
+    method: "POST",
+    url: REFRESH,
+    data: "grant_type=refresh_token&refresh_token=" + refToken,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  })
+    .then(response => {
+      return response.data;
+    })
+    .catch(e => {
+      return false;
+    });
+
+  return {
+    type: AUTOSIGNIN,
+    payload: request
+  };
+};
+
 const actionCreators = {
   signUp,
-  signIn
+  signIn,
+  autoSignIn
 };
 
 export { actionCreators };

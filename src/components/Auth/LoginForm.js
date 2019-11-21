@@ -4,8 +4,7 @@ import {
   View,
   Text,
   Button,
-  AsyncStorage,
-  TextInput
+  KeyboardAvoidingView
 } from "react-native";
 
 import { connect } from "react-redux";
@@ -16,6 +15,8 @@ import { withNavigation } from "react-navigation";
 
 import Input from "../utils/input";
 import ValidationRules from "../utils/validationRules";
+
+import { setTokens } from "../../components/utils/misc";
 
 class LoginForm extends Component {
   state = {
@@ -120,13 +121,30 @@ class LoginForm extends Component {
 
     if (isFormValid) {
       if (this.state.type === "Login") {
-        this.props.signIn(formToSubmit);
+        this.props.signIn(formToSubmit).then(() => {
+          this.manageAccess();
+        });
       } else {
-        this.props.signUp(formToSubmit);
+        this.props.signUp(formToSubmit).then(() => {
+          this.manageAccess();
+        });
       }
     } else {
       this.setState({
         hasErrors: true
+      });
+    }
+  };
+
+  manageAccess = () => {
+    if (!this.props.User.auth.uid) {
+      this.setState({
+        hasErrors: true
+      });
+    } else {
+      setTokens(this.props.User.auth, () => {
+        this.setState({ hasErrors: false });
+        this.props.navigation.navigate("Home");
       });
     }
   };
