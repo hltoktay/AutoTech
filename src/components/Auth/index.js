@@ -44,7 +44,7 @@ class Auth extends Component {
   };
 
   // Normally put above ---->>>  UNSAFE_componentWillMount() ///// UNSAFE_componenDidMount//////
-  UNSAFE_componentWillMount() {
+  UNSAFE_componenDidMount() {
     removeOrientationListener();
     getTokens(value => {
       if (value[0][1] === null) {

@@ -11,7 +11,7 @@ import { createDrawerNavigator } from "react-navigation-drawer";
 import Login from "./components/Auth";
 import Home from "./components/Home";
 import AddPost from "./components/Admin/AddPost";
-import SideDrawer from "./components/SIdeDrawer";
+import SettingScreen from "./components/Setting";
 
 const HomeStack = createStackNavigator(
   {
@@ -19,7 +19,7 @@ const HomeStack = createStackNavigator(
     SellIt: AddPost
   },
   {
-    initialRouteKey: "Home"
+    initialRouteName: "Home"
   }
 );
 
@@ -77,7 +77,10 @@ const AuthStack = createStackNavigator(
 
 const DrawerStack = createDrawerNavigator({
   Home: {
-    screen: SideDrawer
+    screen: Home
+  },
+  Setting: {
+    screen: SettingScreen
   }
 });
 
