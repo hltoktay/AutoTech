@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform } from "react-native";
+import { Platform, Text } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
@@ -11,7 +11,11 @@ import { createDrawerNavigator } from "react-navigation-drawer";
 import Login from "./components/Auth";
 import Home from "./components/Home";
 import AddPost from "./components/Admin/AddPost";
-import SettingScreen from "./components/Setting";
+import SideDrawer from "./components/SideDrawer";
+
+import Screen1 from "./components/Screens/screen1";
+import Screen2 from "./components/Screens/screen2";
+import Screen3 from "./components/Screens/screen3";
 
 const HomeStack = createStackNavigator(
   {
@@ -19,7 +23,8 @@ const HomeStack = createStackNavigator(
     SellIt: AddPost
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "Home",
+    headerMode: "none"
   }
 );
 
@@ -29,7 +34,8 @@ const SellStack = createStackNavigator(
     SellIt: AddPost
   },
   {
-    initialRouteName: "SellIt"
+    initialRouteName: "SellIt",
+    headerMode: "none"
   }
 );
 
@@ -55,7 +61,7 @@ const AppStack = createBottomTabNavigator(
         let iconName;
 
         if (routeName === "Home") {
-          iconName = `ios-apps`;
+          iconName = `md-search`;
         } else if (routeName === "SellIt") {
           iconName = `md-gift`;
         }
@@ -71,26 +77,33 @@ const AuthStack = createStackNavigator(
     Login: Login
   },
   {
+    initialRouteName: "Login",
+    title: "Main",
     headerMode: "none"
   }
 );
 
-const DrawerStack = createDrawerNavigator({
-  Home: {
-    screen: Home
+const DrawerStack = createDrawerNavigator(
+  {
+    Home: { screen: AppStack },
+    SellIt: { screen: AddPost },
+    Profile: { screen: Screen1 },
+    Logout: { screen: Screen3 }
   },
-  Setting: {
-    screen: SettingScreen
+  {
+    contentComponent: props => <SideDrawer {...props} />,
+    drawerType: "slide",
+    drawerPosition: "left"
   }
-});
+);
 
 export const RootNavigator = () => {
   return createAppContainer(
     createSwitchNavigator(
       {
-        App: AppStack,
         Auth: AuthStack,
-        Drawer: DrawerStack
+        App: DrawerStack
+        //Drawer: DrawerStack
       },
       {
         initialRouteName: "Auth"

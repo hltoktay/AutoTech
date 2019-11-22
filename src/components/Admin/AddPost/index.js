@@ -1,13 +1,15 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+
+import { withNavigation } from "react-navigation";
+
+import CustomHeader from "../../Header/index";
 
 class AddPost extends Component {
-  static navigationOptions = {
-    title: "SELLIT"
-  };
   render() {
     return (
       <View style={styles.container}>
+        <CustomHeader />
         <Text>Hello ADDING POST PAGE</Text>
       </View>
     );
@@ -19,4 +21,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddPost;
+export default withNavigation(AddPost);

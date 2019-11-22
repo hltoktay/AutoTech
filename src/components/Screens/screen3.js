@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Button, Image } from "react-native";
-import { Header, Left } from "native-base";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+import CustomHeader from "../Header/index";
 
-class SettingScreen extends Component {
+class Screen3 extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Setting Screen</Text>
+        <CustomHeader />
+        <Text>SCREEN 3 Screen</Text>
       </View>
     );
   }
@@ -17,10 +17,9 @@ class SettingScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "50%",
-    height: "100%",
-    backgroundColor: "green"
+
+    backgroundColor: "red"
   }
 });
 
-export default SettingScreen;
+export default Screen3;

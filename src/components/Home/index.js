@@ -1,60 +1,46 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Button,
-  Image,
-  TouchableOpacity
-} from "react-native";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { withNavigation } from "react-navigation";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+import CustomHeader from "../Header/index";
+import HorizontanScrollIcons from "./Horizontalcons";
 
 class Home extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      categories: ["All", "Sports", "Music", "Clothing", "Electronics"],
+      categorySelected: "All"
+    };
   }
 
-  static navigationOptions = {
-    title: "HOME",
-    headerTintColor: "#e3e3e3",
-    headerStyle: {
-      backgroundColor: "#6b0000"
-    },
-    headerLeft: () => (
-      <TouchableOpacity
-        onPress={() => this.props.navigation.navigate("Setting")}
-      >
-        <Text>
-          <Ionicons name="ios-menu" size={25} color="white" />
-        </Text>
-      </TouchableOpacity>
-    )
+  updateCategoryHandler = value => {
+    this.setState({
+      categorySelected: value
+    });
   };
 
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate("Setting")}
-        >
-          <Text>
-            <Ionicons name="ios-menu" size={25} color="black" />
-          </Text>
-        </TouchableOpacity>
-        <Text>Hello HOMEEEE PAGE</Text>
+      <View>
+        <CustomHeader />
+        <ScrollView>
+          <View style={styles.container}>
+            <HorizontanScrollIcons
+              categories={this.state.categories}
+              categorySelected={this.state.categorySelected}
+              updateCategoryHandler={this.updateCategoryHandler}
+            />
+          </View>
+        </ScrollView>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  },
-  icon: {
-    width: 24,
-    height: 24
+    marginTop: 5
   }
 });
 
