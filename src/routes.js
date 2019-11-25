@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, Text } from "react-native";
+import { Platform, Text, Easing, Animated } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
@@ -12,26 +12,62 @@ import Login from "./components/Auth";
 import Home from "./components/Home";
 import AddPost from "./components/Admin/AddPost";
 import SideDrawer from "./components/SideDrawer";
+import Article from "./components/Article";
+import NotAllow from "./components/Admin/AddPost/notAllow";
 
 import Screen1 from "./components/Screens/screen1";
 import Screen2 from "./components/Screens/screen2";
 import Screen3 from "./components/Screens/screen3";
 
+const ArticleStack = createStackNavigator({
+  Article: Article
+});
+
 const HomeStack = createStackNavigator(
   {
     Home: Home,
-    SellIt: AddPost
+    SellIt: AddPost,
+    Article: ArticleStack
   },
   {
-    initialRouteName: "Home",
-    headerMode: "none"
+    title: "asdasdas",
+    headerMode: "none",
+    mode: "modal",
+    navigationOptions: {
+      gesturesEnabled: false
+    },
+    transitionConfig: () => ({
+      transitionSpec: {
+        duration: 500,
+        easing: Easing.out(Easing.poly(4)),
+        timing: Animated.timing
+      },
+      screenInterpolator: sceneProps => {
+        const { layout, position, scene } = sceneProps;
+        const { index } = scene;
+
+        const height = layout.initHeight;
+        const translateY = position.interpolate({
+          inputRange: [index - 1, index, index + 1],
+          outputRange: [height, 0, 0]
+        });
+
+        const opacity = position.interpolate({
+          inputRange: [index - 1, index - 0.99, index],
+          outputRange: [0, 1, 1]
+        });
+
+        return { opacity, transform: [{ translateY }] };
+      }
+    })
   }
 );
 
 const SellStack = createStackNavigator(
   {
     Home: Home,
-    SellIt: AddPost
+    SellIt: AddPost,
+    Article: ArticleStack
   },
   {
     initialRouteName: "SellIt",
@@ -103,7 +139,6 @@ export const RootNavigator = () => {
       {
         Auth: AuthStack,
         App: DrawerStack
-        //Drawer: DrawerStack
       },
       {
         initialRouteName: "Auth"

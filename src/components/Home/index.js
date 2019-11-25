@@ -53,9 +53,25 @@ class Home extends Component {
     });
   }
 
+  goToArticleHandler = props => {
+    this.props.navigation.push("Article", {
+      passProps: props.price,
+      passDescription: props.description,
+      passTitle: props.title,
+      passOwner: props.email,
+      itemId: 86,
+      otherParam: "anything you want here"
+    });
+  };
+
   showArticles = () =>
     this.state.articles.map((item, i) => (
-      <BlockItem key={`columnHome=${i}`} item={item} iteration={i} />
+      <BlockItem
+        key={`columnHome=${i}`}
+        item={item}
+        iteration={i}
+        goto={this.goToArticleHandler}
+      />
     ));
 
   render() {

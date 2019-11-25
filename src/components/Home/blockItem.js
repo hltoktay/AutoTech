@@ -14,20 +14,30 @@ const BlockItem = props => {
       <Image
         resizeMode={"cover"}
         style={styles.itemImage}
-        source={{ uri: "https://loremflickr.com/320/240/dog" }}
+        source={{ uri: "https://picsum.photos/200/300" }}
       />
     </View>
   );
 
   const block = ({ item, i }) => (
     <View style={styles.blockRow}>
-      <TouchableOpacity onPress={() => alert("go to post")} style={{ flex: 2 }}>
+      <TouchableOpacity
+        onPress={() => {
+          props.goto(item.blockOne);
+        }}
+        style={{ flex: 2 }}
+      >
         <View style={[styles.blockGridStyle, styles.blockGridStyleLeft]}>
           {itemImage()}
           {itemText(item.blockOne)}
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => alert("go to post")} style={{ flex: 2 }}>
+      <TouchableOpacity
+        onPress={() => {
+          props.goto(item.blockTwo);
+        }}
+        style={{ flex: 2 }}
+      >
         <View style={[styles.blockGridStyle, styles.blockGridStyleRight]}>
           {itemImage()}
           {itemText(item.blockTwo)}
@@ -57,12 +67,12 @@ const styles = StyleSheet.create({
     borderLeftColor: "#a9a9a9"
   },
   itemTextTitle: {
-    fontFamily: "Helvetica-BoldOblique",
+    fontFamily: "Avenir-Black",
     color: "#4c4c4c",
     marginBottom: 5
   },
   itemTextPrice: {
-    fontFamily: "Helvetica-BoldOblique",
+    fontFamily: "Avenir-Roman",
     color: "#6b0000"
   },
   blockGridStyle: {
