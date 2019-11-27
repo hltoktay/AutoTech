@@ -1,10 +1,24 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, ScrollView, Button } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  Button,
+  Modal
+} from "react-native";
 
 import Input from "../../utils/input";
 import ValidationRules from "../../utils/validationRules";
 
 import { withNavigation } from "react-navigation";
+
+import { connect } from "react-redux";
+import { addArticle } from "../../../store/actions/articles_actions";
+import { bindActionCreators } from "redux";
+import { autoSignIn } from "../../../store/actions/user_actions";
+
+import { getTokens, setTokens } from "../../utils/misc";
 
 import CustomHeader from "../../Header/index";
 
@@ -16,6 +30,9 @@ class AddPost extends Component {
   state = {
     loading: false,
     hasErrors: false,
+    modalVisible: false,
+    modalSuccess: false,
+    errorsArray: [],
     form: {
       category: {
         value: "",
@@ -25,7 +42,8 @@ class AddPost extends Component {
         options: ["Select", "Sports", "Music", "Clothing", "Electronics"],
         rules: {
           isRequired: true
-        }
+        },
+        errorMsg: "You need to select a category"
       },
       title: {
         value: "",
@@ -35,7 +53,8 @@ class AddPost extends Component {
         rules: {
           isRequired: true,
           maxLength: 50
-        }
+        },
+        errorMsg: "You could enter max 50 char"
       },
       description: {
         value: "",
@@ -45,7 +64,8 @@ class AddPost extends Component {
         rules: {
           isRequired: true,
           maxLength: 150
-        }
+        },
+        errorMsg: "You could enter max 150 char"
       },
       price: {
         value: "",
@@ -55,7 +75,8 @@ class AddPost extends Component {
         rules: {
           isRequired: true,
           maxLength: 6
-        }
+        },
+        errorMsg: "You could enter max 6 char"
       },
       email: {
         value: "",
@@ -64,8 +85,9 @@ class AddPost extends Component {
         type: "textinput",
         rules: {
           isRequired: true,
-          maxLength: true
-        }
+          isEmail: true
+        },
+        errorMsg: "You need to enter an valid email"
       }
     }
   };
@@ -99,10 +121,80 @@ class AddPost extends Component {
     }
 
     if (isFormValid) {
-      console.log(dataToSubmit);
+      this.setState({
+        loading: true
+      });
+
+      getTokens(value => {
+        // console.log(value);
+        const dateNow = new Date();
+        const expiration = dateNow.getTime();
+        const form = {
+          ...dataToSubmit,
+          uid: value[3][1]
+        };
+
+        if (expiration > value[2][1]) {
+          alert("Auto Sign In");
+        } else {
+          alert("Post the article");
+        }
+      });
+      // console.log(dataToSubmit);
+      // this.setState({
+      //   modalSuccess: true
+      // });
     } else {
-      console.log("Has errors");
+      let errorsArray = [];
+
+      for (let key in formCopy) {
+        if (!formCopy[key].valid) {
+          errorsArray.push(formCopy[key].errorMsg);
+        }
+      }
+
+      this.setState({
+        loading: false,
+        hasErrors: true,
+        modalVisible: true,
+        errorsArray
+      });
     }
+  };
+
+  showErrosArray = errors =>
+    errors
+      ? errors.map((item, i) => (
+          <Text key={i} style={styles.errorItem}>
+            - {item}
+          </Text>
+        ))
+      : null;
+
+  clearErrors = () => {
+    this.setState({
+      hasErrors: false,
+      modalVisible: false,
+      errorsArray: []
+    });
+  };
+
+  resetSellItScreen = () => {
+    const formCopy = this.state.form;
+
+    for (let key in formCopy) {
+      formCopy[key].valid = false;
+      formCopy[key].value = "";
+    }
+
+    this.setState({
+      modalSuccess: false,
+      hasErrors: false,
+      errorsArray: [],
+      loading: false
+    });
+
+    // dispatch action to clear the store....
   };
 
   render() {
@@ -204,6 +296,36 @@ class AddPost extends Component {
                 onPress={this.submitFormHandler}
               />
             ) : null}
+
+            <Modal
+              animationType="slide"
+              visible={this.state.modalVisible}
+              onRequestClose={() => {}}
+              presentationStyle="formSheet"
+            >
+              <View style={{ padding: 20, marginTop: 30 }}>
+                {this.showErrosArray(this.state.errorsArray)}
+                <Button title="Back to Form" onPress={this.clearErrors} />
+              </View>
+            </Modal>
+
+            <Modal
+              animationType="slide"
+              visible={this.state.modalSuccess}
+              onRequestClose={() => {}}
+              presentationStyle="pageSheet"
+            >
+              <View style={{ padding: 20, marginTop: 30 }}>
+                <Text>Well done!</Text>
+                <Button
+                  title="Go back Home"
+                  onPress={() => {
+                    this.resetSellItScreen();
+                    this.props.navigation.navigate("Home");
+                  }}
+                />
+              </View>
+            </Modal>
           </View>
         </ScrollView>
       </View>
@@ -249,7 +371,27 @@ const styles = StyleSheet.create({
     padding: 10,
     minHeight: 100,
     width: "100%"
+  },
+  errorItem: {
+    fontFamily: "Avenir-Roman",
+    fontSize: 16,
+    color: "red",
+    marginBottom: 10
   }
 });
 
-export default withNavigation(AddPost);
+function mapStateToProps(state) {
+  return {
+    Articles: state.Articles,
+    User: state.User
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ addArticle, autoSignIn }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withNavigation(AddPost));

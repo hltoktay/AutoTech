@@ -7,13 +7,6 @@ import {
   KeyboardAvoidingView
 } from "react-native";
 
-import {
-  getOrientation,
-  setOrientationListener,
-  removeOrientationListener,
-  getPlatform
-} from "../../components/utils/misc";
-
 import Logo from "./logo";
 import LoginPanel from "./loginPanel";
 
@@ -21,7 +14,14 @@ import { connect } from "react-redux";
 import { autoSignIn } from "../../store/actions/user_actions";
 import { bindActionCreators } from "redux";
 
-import { getTokens, setTokens } from "../../components/utils/misc";
+import {
+  getOrientation,
+  setOrientationListener,
+  removeOrientationListener,
+  getPlatform,
+  getTokens,
+  setTokens
+} from "../../components/utils/misc";
 
 class Auth extends Component {
   constructor(props) {
@@ -44,8 +44,8 @@ class Auth extends Component {
   };
 
   // Normally put above ---->>>  UNSAFE_componentWillMount() ///// UNSAFE_componenDidMount//////
-  UNSAFE_componenDidMount() {
-    removeOrientationListener();
+  UNSAFE_componentWillMount() {
+    // removeOrientationListener();
     getTokens(value => {
       if (value[0][1] === null) {
         this.setState({ loading: false });

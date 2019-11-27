@@ -1,4 +1,4 @@
-import { GET_ARTICLES } from "../types";
+import { GET_ARTICLES, ADD_ARTICLE } from "../types";
 
 import axios from "axios";
 import { FIREBASEURL } from "../../components/utils/misc";
@@ -24,6 +24,21 @@ export function getArticles(category) {
 
   return {
     type: GET_ARTICLES,
+    payload: request
+  };
+}
+
+export function addArticle(data, token) {
+  const request = axios({
+    method: "POST",
+    url: `${FIREBASEURL}/articles.json?auth=${token}`,
+    data: data
+  }).then(response => {
+    return response.data;
+  });
+
+  return {
+    type: ADD_ARTICLE,
     payload: request
   };
 }
