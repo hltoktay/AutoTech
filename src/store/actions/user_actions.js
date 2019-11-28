@@ -1,4 +1,4 @@
-import { SIGNUP, SIGNIN, AUTOSIGNIN } from "../types";
+import { SIGNUP, SIGNIN, AUTOSIGNIN, GET_USER_POSTS } from "../types";
 import axios from "axios";
 import {
   SIGN_UP,
@@ -83,10 +83,32 @@ export const autoSignIn = refToken => {
   };
 };
 
+export function getUserPosts(UID) {
+  const request = axios(
+    `${FIREBASEURL}/articles.json?orderBy=\"uid\"&equalTo=\"${UID}\"`
+  ).then(response => {
+    let articles = [];
+
+    for (let key in response.data) {
+      return articles.push({
+        ...response.data[key],
+        id: key
+      });
+    }
+    return articles;
+  });
+
+  return {
+    type: GET_USER_POSTS,
+    payload: request
+  };
+}
+
 const actionCreators = {
   signUp,
   signIn,
-  autoSignIn
+  autoSignIn,
+  getUserPosts
 };
 
 export { actionCreators };

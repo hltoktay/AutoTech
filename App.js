@@ -1,26 +1,3 @@
-// import React, {Component} from 'react';
-
-// import { RootNavigator } from './src/routes';
-
-// import ConfigureStore from './src/store/config';
-// import { Provider } from 'react-redux'
-
-//  const store = ConfigureStore();
-
-// class App extends Component {
-
-//   render() {
-//    const Nav = RootNavigator();
-
-//     return (
-//       <Provider  store={store} >
-//           <Nav />
-//       </Provider>
-//     )
-//   }
-// }
-
-// export default App;
 import React, { Component } from "react";
 import { RootNavigator } from "./src/routes";
 import { Provider } from "react-redux";

@@ -43,9 +43,12 @@ class Auth extends Component {
     });
   };
 
-  // Normally put above ---->>>  UNSAFE_componentWillMount() ///// UNSAFE_componenDidMount//////
-  UNSAFE_componentWillMount() {
-    // removeOrientationListener();
+  UNSAFE_componenDidUnmount() {
+    removeOrientationListener();
+  }
+
+  // Normally put above ---->>>  UNSAFE_componentWillMount() ///// UNSAFE_componenDidMount////// componentWillUnmount
+  componenDidMount() {
     getTokens(value => {
       if (value[0][1] === null) {
         this.setState({ loading: false });
@@ -53,7 +56,7 @@ class Auth extends Component {
         this.props.autoSignIn(value[1][1]).then(() => {
           if (!this.props.User.auth.token) {
             this.setState({ loading: false });
-            this.props.navigation.navigate("Home");
+            //  this.props.navigation.navigate("Home");
           } else {
             setTokens(this.props.User.auth, () => {
               this.props.navigation.navigate("Home");

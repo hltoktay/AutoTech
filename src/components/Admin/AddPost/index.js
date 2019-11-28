@@ -14,7 +14,10 @@ import ValidationRules from "../../utils/validationRules";
 import { withNavigation } from "react-navigation";
 
 import { connect } from "react-redux";
-import { addArticle } from "../../../store/actions/articles_actions";
+import {
+  addArticle,
+  resetArticle
+} from "../../../store/actions/articles_actions";
 import { bindActionCreators } from "redux";
 import { autoSignIn } from "../../../store/actions/user_actions";
 
@@ -121,12 +124,13 @@ class AddPost extends Component {
     }
 
     if (isFormValid) {
+      console.log(dataToSubmit);
       this.setState({
-        loading: true
+        modalSuccess: true
       });
 
       getTokens(value => {
-        // console.log(value);
+        console.log(value);
         const dateNow = new Date();
         const expiration = dateNow.getTime();
         const form = {
@@ -135,15 +139,22 @@ class AddPost extends Component {
         };
 
         if (expiration > value[2][1]) {
-          alert("Auto Sign In");
+          console.log("Auto SIGN IN");
+          this.props.autoSignIn(value[1][1]).then(() => {
+            setTokens(this.props.User.auth, () => {
+              this.props
+                .addArticle(form, this.props.User.auth.token)
+                .then(() => {
+                  this.setState({ modalSuccess: true });
+                });
+            });
+          });
         } else {
-          alert("Post the article");
+          this.props.addArticle(form, value[0][1]).then(() => {
+            this.setState({ modalSuccess: true });
+          });
         }
       });
-      // console.log(dataToSubmit);
-      // this.setState({
-      //   modalSuccess: true
-      // });
     } else {
       let errorsArray = [];
 
@@ -194,7 +205,7 @@ class AddPost extends Component {
       loading: false
     });
 
-    // dispatch action to clear the store....
+    this.props.resetArticle();
   };
 
   render() {
@@ -313,7 +324,7 @@ class AddPost extends Component {
               animationType="slide"
               visible={this.state.modalSuccess}
               onRequestClose={() => {}}
-              presentationStyle="pageSheet"
+              presentationStyle="formSheet"
             >
               <View style={{ padding: 20, marginTop: 30 }}>
                 <Text>Well done!</Text>
@@ -388,7 +399,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addArticle, autoSignIn }, dispatch);
+  return bindActionCreators({ addArticle, autoSignIn, resetArticle }, dispatch);
 }
 
 export default connect(

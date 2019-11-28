@@ -1,4 +1,4 @@
-import { SIGNIN, SIGNUP, AUTOSIGNIN } from "../types";
+import { SIGNIN, SIGNUP, AUTOSIGNIN, GET_USER_POSTS } from "../types";
 
 export default function(state = {}, action) {
   switch (action.type) {
@@ -11,6 +11,7 @@ export default function(state = {}, action) {
           refToken: action.payload.refreshToken || false
         }
       };
+
     case SIGNUP:
       return {
         ...state,
@@ -29,6 +30,12 @@ export default function(state = {}, action) {
           token: action.payload.id_token || false,
           refToken: action.payload.refresh_token || false
         }
+      };
+
+    case GET_USER_POSTS:
+      return {
+        ...state,
+        userPosts: action.payload
       };
 
     default:

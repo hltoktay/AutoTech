@@ -8,9 +8,13 @@ import {
 } from "react-native";
 import { Container, Content, Text, List, ListItem, Icon } from "native-base";
 
-const routes = ["Home", "SellIt", "Profile", "Logout"];
+const routes = ["Home", "SellIt", "MyPost", "Setting", "Logout"];
 
 class SideDrawer extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <Container>
@@ -28,6 +32,7 @@ class SideDrawer extends React.Component {
             }}
           ></ImageBackground>
           <List
+            keyExtractor={(data, index) => data.toString()}
             dataArray={routes}
             renderRow={data => {
               return (

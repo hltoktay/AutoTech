@@ -42,7 +42,7 @@ export const getTokens = cb => {
 
 export const setTokens = (values, cb) => {
   const dateNow = new Date();
-  const expiration = dateNow.getTime() + 1 * 1000;
+  const expiration = dateNow.getTime() + 3600 * 1000;
 
   AsyncStorage.multiSet([
     ["@AutoTech@token", values.token],
@@ -50,7 +50,7 @@ export const setTokens = (values, cb) => {
     ["@AutoTech@expireToken", expiration.toString()],
     ["@AutoTech@uid", values.uid]
   ]).then(response => {
-    cb(response);
+    cb();
   });
 };
 

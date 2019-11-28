@@ -15,7 +15,7 @@ import SideDrawer from "./components/SideDrawer";
 import Article from "./components/Article";
 import NotAllow from "./components/Admin/AddPost/notAllow";
 
-import Screen1 from "./components/Screens/screen1";
+import MyPost from "./components/Screens/MyPost";
 import Screen2 from "./components/Screens/screen2";
 import Screen3 from "./components/Screens/screen3";
 
@@ -30,7 +30,6 @@ const HomeStack = createStackNavigator(
     Article: ArticleStack
   },
   {
-    title: "asdasdas",
     headerMode: "none",
     mode: "modal",
     navigationOptions: {
@@ -123,8 +122,9 @@ const DrawerStack = createDrawerNavigator(
   {
     Home: { screen: AppStack },
     SellIt: { screen: AddPost },
-    Profile: { screen: Screen1 },
-    Logout: { screen: Screen3 }
+    MyPost: { screen: MyPost },
+    Setting: { screen: Screen3 },
+    Logout: { screen: AuthStack }
   },
   {
     contentComponent: props => <SideDrawer {...props} />,
