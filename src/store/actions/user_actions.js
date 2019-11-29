@@ -61,7 +61,7 @@ export function signIn(data) {
   };
 }
 
-export const autoSignIn = refToken => {
+export function autoSignIn(refToken) {
   const request = axios({
     method: "POST",
     url: REFRESH,
@@ -81,7 +81,7 @@ export const autoSignIn = refToken => {
     type: AUTOSIGNIN,
     payload: request
   };
-};
+}
 
 export function getUserPosts(UID) {
   const request = axios(
@@ -90,7 +90,7 @@ export function getUserPosts(UID) {
     let articles = [];
 
     for (let key in response.data) {
-      return articles.push({
+      articles.push({
         ...response.data[key],
         id: key
       });

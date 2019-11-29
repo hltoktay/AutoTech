@@ -11,7 +11,7 @@ export default function(state = {}, action) {
           refToken: action.payload.refreshToken || false
         }
       };
-
+      break;
     case SIGNUP:
       return {
         ...state,
@@ -21,7 +21,7 @@ export default function(state = {}, action) {
           refToken: action.payload.refreshToken || false
         }
       };
-
+      break;
     case AUTOSIGNIN:
       return {
         ...state,
@@ -31,13 +31,13 @@ export default function(state = {}, action) {
           refToken: action.payload.refresh_token || false
         }
       };
-
+      break;
     case GET_USER_POSTS:
       return {
         ...state,
         userPosts: action.payload
       };
-
+      break;
     default:
       return state;
   }

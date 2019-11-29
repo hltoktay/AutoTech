@@ -18,7 +18,11 @@ class MyPost extends Component {
 
   componentDidMount() {
     const UID = this.props.User.auth.uid;
-    this.props.getUserPosts(UID);
+    this.props.getUserPosts(UID).then(nextProps => {
+      this.setState({
+        posts: nextProps.User.userPosts
+      });
+    });
   }
 
   componentWillReceiveProps(nextProps) {
