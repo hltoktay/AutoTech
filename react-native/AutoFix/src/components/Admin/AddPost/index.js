@@ -355,13 +355,13 @@ const styles = StyleSheet.create({
   mainTitle: {
     fontFamily: "Avenir-Roman",
     fontSize: 30,
-    color: "#00ada9",
+    color: "#6b0000",
     fontWeight: "bold"
   },
   secondTitle: {
     fontFamily: "Avenir-Roman",
     fontSize: 20,
-    color: "#00ada9",
+    color: "#6b0000",
     marginTop: 30,
     marginBottom: 30,
     fontWeight: "bold"
