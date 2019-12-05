@@ -4,9 +4,10 @@ import {
   View,
   Text,
   ScrollView,
-  Button,
-  Modal
+  Button
 } from "react-native";
+
+import Modal from "react-native-modal";
 
 import Input from "../../utils/input";
 import ValidationRules from "../../utils/validationRules";
@@ -42,7 +43,7 @@ class AddPost extends Component {
         name: "category",
         valid: false,
         type: "picker",
-        options: ["Select", "Sports", "Music", "Clothing", "Electronics"],
+        options: ["Select", "EVC", "Magic Motor", "Training", "Truck Script", "DAMOS"],
         rules: {
           isRequired: true
         },
@@ -309,24 +310,24 @@ class AddPost extends Component {
             ) : null}
 
             <Modal
-              animationType="slide"
-              visible={this.state.modalVisible}
+              isVisible={this.state.modalVisible}
               onRequestClose={() => {}}
-              presentationStyle="formSheet"
+              testID={'modal'} 
+              swipeDirection={['down']}
             >
-              <View style={{ padding: 20, marginTop: 30 }}>
+              <View style={styles.modalContent}>
                 {this.showErrosArray(this.state.errorsArray)}
                 <Button title="Back to Form" onPress={this.clearErrors} />
               </View>
             </Modal>
 
             <Modal
-              animationType="slide"
-              visible={this.state.modalSuccess}
+              isVisible={this.state.modalSuccess}
               onRequestClose={() => {}}
-              presentationStyle="formSheet"
+              testID={'modal'} 
+              swipeDirection={['down']}
             >
-              <View style={{ padding: 20, marginTop: 30 }}>
+              <View style={styles.modalContent}>
                 <Text>Well done!</Text>
                 <Button
                   title="Go back Home"
@@ -388,6 +389,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "red",
     marginBottom: 10
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
   }
 });
 

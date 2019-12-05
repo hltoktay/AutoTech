@@ -9,16 +9,19 @@ const categoriesIcons = value => {
     case "All":
       name = "ios-keypad";
       break;
-    case "Sports":
+    case "EVC":
       name = "md-baseball";
       break;
-    case "Music":
+    case "Magic Motor":
       name = "md-microphone";
       break;
-    case "Electronics":
+    case "Training":
       name = "md-desktop";
       break;
-    case "Clothing":
+    case "Truck Script":
+      name = "md-pricetags";
+      break;
+      case "DAMOS":
       name = "md-pricetags";
       break;
     default:

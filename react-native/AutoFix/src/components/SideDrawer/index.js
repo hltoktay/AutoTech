@@ -52,6 +52,8 @@ class SideDrawer extends React.Component {
   }
 }
 
-export default SideDrawer;
 
 const styles = StyleSheet.create({});
+
+export default SideDrawer;
+

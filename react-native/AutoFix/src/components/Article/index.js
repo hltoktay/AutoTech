@@ -5,37 +5,41 @@ import {
   View,
   Image,
   ScrollView,
-  Linking
+  Linking,
+  TouchableOpacity
 } from "react-native";
 import { HeaderBackButton } from "react-navigation-stack";
 
+import {Button } from 'native-base'
+
 import Icon from "react-native-vector-icons/Ionicons";
+
 
 class Article extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerTitle: "AUTO TECH",
-      headerStyle: {
-        backgroundColor: "#6b0000"
-      },
-      headerTintColor: "#fff",
-      headerTitleStyle: {
-        fontWeight: "bold"
-      },
-      headerLeft: (
-        <HeaderBackButton
-          tintColor={"white"}
-          onPress={() => {
-            navigation.navigate("Home");
-          }}
-        />
-      )
-    };
-  };
+  // static navigationOptions = ({ navigation }) => {
+  //   return {
+  //     headerTitle: "AUTO TECH",
+  //     headerStyle: {
+  //       backgroundColor: "#6b0000"
+  //     },
+  //     headerTintColor: "#fff",
+  //     headerTitleStyle: {
+  //       fontWeight: "bold"
+  //     },
+  //     headerLeft: (
+  //       <HeaderBackButton
+  //         tintColor={"white"}
+  //         onPress={() => {
+  //           navigation.navigate("SellIt");
+  //         }}
+  //       />
+  //     )
+  //   };
+  // };
 
   render() {
     const { navigation } = this.props;
@@ -69,12 +73,25 @@ class Article extends React.Component {
         <View style={styles.ownerInfo}>
           <Icon.Button
             name="ios-mail"
-            color="#00ada9"
+            color="#6b0000"
+             size={24}
             backgroundColor="#fff"
             onPress={() => openEmail()}
           >
             <Text>Contact:{navigation.getParam("passOwner")}</Text>
           </Icon.Button>
+
+        <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'space-around' }}>
+        <Button onPress={() => alert('Buy Now')} block  style={{padding: 15, backgroundColor: '#ffcaca', borderWidth: 1, borderColor: '#6b0000' }}>
+            <Text style={{color: '#6b0000'}}>Buy Now</Text>
+          </Button>
+          
+
+          <Button onPress={() => alert('Item Added')} block  style={{padding: 15, backgroundColor: '#ffcaca', borderWidth: 1, borderColor: '#6b0000'}}>
+            <Text style={{color: '#6b0000'}}>Add Cart</Text>
+          </Button>
+        </TouchableOpacity>
+
         </View>
       </ScrollView>
     );
@@ -94,7 +111,7 @@ const styles = StyleSheet.create({
   },
   priceTag: {
     position: "absolute",
-    bottom: 209,
+    bottom: 236,
     backgroundColor: "#6b0000",
     padding: 10,
     color: "#fff",
@@ -118,7 +135,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
     paddingTop: 10,
     borderTopWidth: 1,
-    borderTopColor: "#eee"
+    borderTopColor: "#eee",
+   
   }
 });
 

@@ -20,7 +20,7 @@ class Home extends Component {
     this.state = {
       isLoading: true,
       articles: [],
-      categories: ["All", "Sports", "Music", "Clothing", "Electronics"],
+      categories: ["All", "EVC", "Magic Motor", "Training", "Truck Script", "DAMOS"],
       categorySelected: "All"
     };
   }
@@ -59,8 +59,7 @@ class Home extends Component {
       passDescription: props.description,
       passTitle: props.title,
       passOwner: props.email,
-      itemId: 86,
-      otherParam: "anything you want here"
+
     });
   };
 

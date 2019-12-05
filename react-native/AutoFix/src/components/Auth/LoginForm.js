@@ -200,13 +200,13 @@ class LoginForm extends Component {
           />
         </View>
 
-        <View>
+        {/* <View>
           <Button
             title="Do it later"
             color="#ffcaca"
             onPress={() => this.props.navigation.navigate("Home")}
           />
-        </View>
+        </View> */}
       </View>
     );
   }

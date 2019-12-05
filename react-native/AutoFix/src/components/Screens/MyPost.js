@@ -30,7 +30,7 @@ class MyPost extends Component {
     });
   }
 
-componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.User.userPosts) {
       this.setState({
         posts: nextProps.User.userPosts

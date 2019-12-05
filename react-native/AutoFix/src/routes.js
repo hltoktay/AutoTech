@@ -21,7 +21,7 @@ import Screen3 from "./components/Screens/screen3";
 
 const ArticleStack = createStackNavigator({
   Article: Article
-});
+}, );
 
 const HomeStack = createStackNavigator(
   {
