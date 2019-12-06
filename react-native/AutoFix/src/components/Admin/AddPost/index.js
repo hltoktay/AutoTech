@@ -4,8 +4,12 @@ import {
   View,
   Text,
   ScrollView,
-  Button
+  Button,
+  TouchableOpacity,
+  Image
 } from "react-native";
+
+import ImagePicker from 'react-native-image-picker';
 
 import Modal from "react-native-modal";
 
@@ -26,12 +30,14 @@ import { getTokens, setTokens } from "../../utils/misc";
 
 import CustomHeader from "../../Header/index";
 
+
 class AddPost extends Component {
   constructor(props) {
     super(props);
   }
 
   state = {
+    image: '',
     loading: false,
     hasErrors: false,
     modalVisible: false,
@@ -82,6 +88,7 @@ class AddPost extends Component {
         },
         errorMsg: "You could enter max 6 char"
       },
+      image: '',
       email: {
         value: "",
         name: "email",
@@ -209,6 +216,18 @@ class AddPost extends Component {
     this.props.resetArticle();
   };
 
+  addImage = () => {
+    const options = {
+      noData: true
+    };
+    ImagePicker.launchImageLibrary(options, response => {
+      console.log('response', response);
+      if (response.uri) {
+        this.setState({ image: response})
+      }
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -263,7 +282,7 @@ class AddPost extends Component {
               />
             </View>
 
-            <View>
+            <View style={{ flex: 1, alignItems: "center" }}>
               <Text
                 style={{
                   marginTop: 20,
@@ -281,6 +300,24 @@ class AddPost extends Component {
                 keyboardType={"numeric"}
               />
             </View>
+
+            <View style={{ flex: 1, alignItems: "center" }}>
+              <Text style={styles.secondTitle}>
+                Add picture about your item
+              </Text>
+            </View>
+
+            <View style={{backgroundColor: '#f2f2f2', marginBottom: 10 }}>
+               <Image
+                source={{ uri: this.state.image.uri }}
+                style={styles.avatar}
+              />
+            </View>
+
+            <TouchableOpacity onPress={() => this.addImage()} style={{ alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ borderWidth: 1, borderColor: '#6b0000', padding: 5, width: '30%', backgroundColor: '#ffcaca', textAlign: 'center' }}>Add image</Text>
+              </TouchableOpacity>
+
 
             <View style={{ flex: 1, alignItems: "center" }}>
               <Text style={styles.secondTitle}>
@@ -397,6 +434,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 4,
     borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  avatar: {
+    width: '100%',
+    height: 250,
+    marginBottom: 10
   }
 });
 
