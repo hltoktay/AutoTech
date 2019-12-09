@@ -14,35 +14,96 @@ import {Button } from 'native-base'
 
 import Icon from "react-native-vector-icons/Ionicons";
 
+import stripe from 'tipsi-stripe';
+import axios from 'axios';
+
+
+
+stripe.setOptions({
+  publishableKey: 'pk_test_4xpMrbSDQbi6XfZLMt6DIHf2'
+})
+
 
 class Article extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      loading: false,
+      token: null,
+    }
   }
 
-  // static navigationOptions = ({ navigation }) => {
-  //   return {
-  //     headerTitle: "AUTO TECH",
-  //     headerStyle: {
-  //       backgroundColor: "#6b0000"
-  //     },
-  //     headerTintColor: "#fff",
-  //     headerTitleStyle: {
-  //       fontWeight: "bold"
-  //     },
-  //     headerLeft: (
-  //       <HeaderBackButton
-  //         tintColor={"white"}
-  //         onPress={() => {
-  //           navigation.navigate("SellIt");
-  //         }}
-  //       />
-  //     )
-  //   };
-  // };
+ 
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerTitle: "AUTO TECH",
+      headerStyle: {
+        backgroundColor: "#6b0000"
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        fontWeight: "bold"
+      },
+      headerLeft: (
+        <HeaderBackButton
+          tintColor={"white"}
+          onPress={() => {
+            navigation.navigate("CardFormScreen");
+          }}
+        />
+      )
+    };
+  };
+
+
+  handleCardPayPress = async (props) => {
+    try {
+      this.setState({ loading: true, token: null })
+      const token = await stripe.paymentRequestWithCardForm({
+        // Only iOS support this options
+        smsAutofillDisabled: true,
+        requiredBillingAddressFields: 'full',
+        prefilledInformation: {
+          billingAddress: {
+            name: 'Gunilla Haugeh',
+            line1: 'Canary Place',
+            line2: '3',
+            city: 'Macon',
+            state: 'Georgia',
+            country: 'US',
+            postalCode: '31217',
+            email: 'ghaugeh0@printfriendly.com',
+          },
+        },
+      })
+
+      this.setState({ loading: false, token })
+    } catch (error) {
+      this.setState({ loading: false })
+    }
+  }
+
+  makePayment =  () => {
+    this.setState({loading: true})
+
+    axios({
+      method: "POST",
+      url: 'https://us-central1-autotech-bc113.cloudfunctions.net/completePaymentWithStripe',
+      data: {
+        amount: 100,
+        currency: 'gbp',
+        token: this.state.token,
+      },
+    }).then(response => {
+      console.log(response);
+      this.setState({loading: false})
+    })
+  }
 
   render() {
-    const { navigation } = this.props;
+    const { navigation  } = this.props;
 
     const openEmail = () => {
       Linking.openURL("mailto:example@gmail.com?subject=example&body=example");
@@ -82,15 +143,34 @@ class Article extends React.Component {
           </Icon.Button>
 
         <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'space-around' }}>
-        <Button onPress={() => alert('Buy Now')} block  style={{padding: 15, backgroundColor: '#ffcaca', borderWidth: 1, borderColor: '#6b0000' }}>
+        <Button 
+        onPress={this.handleCardPayPress} 
+        block  
+        loading={this.state.loading}
+        style={{padding: 15, backgroundColor: '#ffcaca', borderWidth: 1, borderColor: '#6b0000' }}>
             <Text style={{color: '#6b0000'}}>Buy Now</Text>
           </Button>
-          
+      
 
           <Button onPress={() => alert('Item Added')} block  style={{padding: 15, backgroundColor: '#ffcaca', borderWidth: 1, borderColor: '#6b0000'}}>
             <Text style={{color: '#6b0000'}}>Add Cart</Text>
           </Button>
         </TouchableOpacity>
+
+        {this.state.token &&
+            
+            <View >
+                <Text style={styles.token}>
+              Token: {this.state.token.tokenId}
+            </Text>
+            <View>
+            <Button  loading={this.state.loading} onPress={this.makePayment}>
+            <Text style={{color: '#6b0000'}}>Make Payment</Text>
+          </Button>
+            </View>
+         
+              </View>
+            }
 
         </View>
       </ScrollView>
@@ -136,7 +216,18 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     borderTopWidth: 1,
     borderTopColor: "#eee",
-   
+  },
+  token: {
+    color: '#2e2e2e',
+    marginTop: 70,
+    position: 'absolute',
+    marginRight: 70
+  },
+  paymentButton: {
+    marginTop: 50,
+    position: 'absolute',
+    color: 'black',
+    backgroundColor: 'grey'
   }
 });
 

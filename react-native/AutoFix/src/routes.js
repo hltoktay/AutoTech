@@ -19,8 +19,11 @@ import MyPost from "./components/Screens/MyPost";
 import Screen2 from "./components/Screens/screen2";
 import Screen3 from "./components/Screens/screen3";
 
+import CardFormScreen from './components/Scenes/CardFormScreen'
+
 const ArticleStack = createStackNavigator({
-  Article: Article
+  Article: Article,
+  CardFormScreen: CardFormScreen
 }, );
 
 const HomeStack = createStackNavigator(

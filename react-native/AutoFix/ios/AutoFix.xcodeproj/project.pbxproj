@@ -17,6 +17,7 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* AutoFixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AutoFixTests.m */; };
 		58755FDFB7CA8388E263E94F /* libPods-AutoFixTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D9326C4C96A2670B1C19380 /* libPods-AutoFixTests.a */; };
+		6B4D11F0239EA92800A3E391 /* TPSStripe in Resources */ = {isa = PBXBuildFile; fileRef = 6B4D11EF239EA92800A3E391 /* TPSStripe */; };
 		B135CF97760D56BF00DA3927 /* libPods-AutoFix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCF8DE4644C3D94BB6FAB12 /* libPods-AutoFix.a */; };
 		D512A9290701CFE2044D4042 /* libPods-AutoFix-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD85ECA694FEADCFFB6AC15 /* libPods-AutoFix-tvOS.a */; };
 		DB69A6DB3F94D93FC233E5E9 /* libPods-AutoFix-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 915238FBB42C50B9D028E5C3 /* libPods-AutoFix-tvOSTests.a */; };
@@ -59,6 +60,7 @@
 		3CCF8DE4644C3D94BB6FAB12 /* libPods-AutoFix.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AutoFix.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C18C8D870F23E809265FF89 /* Pods-AutoFix.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoFix.release.xcconfig"; path = "Target Support Files/Pods-AutoFix/Pods-AutoFix.release.xcconfig"; sourceTree = "<group>"; };
 		4D9326C4C96A2670B1C19380 /* libPods-AutoFixTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AutoFixTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B4D11EF239EA92800A3E391 /* TPSStripe */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TPSStripe; path = "../node_modules/tipsi-stripe/ios/TPSStripe"; sourceTree = "<group>"; };
 		6F99DE2A83854F1C819F679A /* Pods-AutoFixTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoFixTests.release.xcconfig"; path = "Target Support Files/Pods-AutoFixTests/Pods-AutoFixTests.release.xcconfig"; sourceTree = "<group>"; };
 		915238FBB42C50B9D028E5C3 /* libPods-AutoFix-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AutoFix-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCDF3C5450CEA18DDC362E0D /* Pods-AutoFix-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoFix-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-AutoFix-tvOS/Pods-AutoFix-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				6B4D11EF239EA92800A3E391 /* TPSStripe */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -194,7 +197,6 @@
 				3618723341D95D4A80174ADD /* Pods-AutoFixTests.debug.xcconfig */,
 				6F99DE2A83854F1C819F679A /* Pods-AutoFixTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -309,6 +311,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -338,6 +341,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				6B4D11F0239EA92800A3E391 /* TPSStripe in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -397,6 +401,8 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-C++/gRPCCertificates.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -416,6 +422,8 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Stripe.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
