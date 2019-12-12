@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -34,10 +34,11 @@ import CustomHeader from "../../Header/index";
 class AddPost extends Component {
   constructor(props) {
     super(props);
+
   }
 
-  state = {
-    image: '',
+
+  state = {  
     loading: false,
     hasErrors: false,
     modalVisible: false,
@@ -88,7 +89,6 @@ class AddPost extends Component {
         },
         errorMsg: "You could enter max 6 char"
       },
-      image: '',
       email: {
         value: "",
         name: "email",
@@ -99,6 +99,13 @@ class AddPost extends Component {
           isEmail: true
         },
         errorMsg: "You need to enter an valid email"
+      },
+      phone: {
+        value: "",
+        name: "phone",
+        valid: false,
+        type: "textinput",
+        errorMsg: "PHONE NUMBER"
       }
     }
   };
@@ -218,17 +225,40 @@ class AddPost extends Component {
 
   addImage = () => {
     const options = {
-      noData: true
+      title: 'Select Avatar',
+      customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
     };
-    ImagePicker.launchImageLibrary(options, response => {
-      console.log('response', response);
-      if (response.uri) {
-        this.setState({ image: response})
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+    
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = { uri: response.uri };
+        console.log(response.uri)
+    
+        // You can also display the image using data:
+        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+    
+        this.setState({
+          avatarSource: source,
+        });
       }
-    })
+    });
   }
 
+
   render() {
+
+  
     return (
       <View style={styles.container}>
         <CustomHeader />
@@ -302,22 +332,45 @@ class AddPost extends Component {
             </View>
 
             <View style={{ flex: 1, alignItems: "center" }}>
+              <Text
+                style={{
+                  marginTop: 20,
+                  marginBottom: 20
+                }}
+              >
+                PHONE NUMBER
+              </Text>
+              <Input
+                placeholder="PHONE NUMBER"
+                type={this.state.form.phone.type}
+                value={this.state.form.phone.value}
+                onChangeText={value => this.updateInput("phone", value)}
+                overRideStyle={styles.inputText}
+                keyboardType={"numeric"}
+              />
+            </View>
+ 
+            <View style={{ flex: 1, alignItems: "center" }}>
               <Text style={styles.secondTitle}>
                 Add picture about your item
               </Text>
             </View>
 
             <View style={{backgroundColor: '#f2f2f2', marginBottom: 10 }}>
-               <Image
-                source={{ uri: this.state.image.uri }}
-                style={styles.avatar}
-              />
-            </View>
+            <Image 
+            source={this.state.avatarSource} 
+            style={styles.avatar}
+            
+            />
+            </View> 
 
-            <TouchableOpacity onPress={() => this.addImage()} style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <TouchableOpacity 
+            onPress={() => this.addImage()} 
+            style={{ alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ borderWidth: 1, borderColor: '#6b0000', padding: 5, width: '30%', backgroundColor: '#ffcaca', textAlign: 'center' }}>Add image</Text>
               </TouchableOpacity>
 
+            
 
             <View style={{ flex: 1, alignItems: "center" }}>
               <Text style={styles.secondTitle}>

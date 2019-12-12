@@ -50,7 +50,7 @@ class Article extends React.Component {
         <HeaderBackButton
           tintColor={"white"}
           onPress={() => {
-            navigation.navigate("CardFormScreen");
+            navigation.navigate("Home");
           }}
         />
       )
@@ -99,6 +99,8 @@ class Article extends React.Component {
     }).then(response => {
       console.log(response);
       this.setState({loading: false})
+    }).catch(error => {
+      console.log(error)
     })
   }
 
@@ -158,19 +160,26 @@ class Article extends React.Component {
         </TouchableOpacity>
 
         {this.state.token &&
-            
-            <View >
+            <View style={styles.paymentContent}>
+
+
+              <View>
                 <Text style={styles.token}>
-              Token: {this.state.token.tokenId}
-            </Text>
-            <View>
-            <Button  loading={this.state.loading} onPress={this.makePayment}>
-            <Text style={{color: '#6b0000'}}>Make Payment</Text>
-          </Button>
-            </View>
-         
+                  Token: {this.state.token.tokenId}
+           
+                </Text>
               </View>
+
+              <View>
+                <TouchableOpacity  loading={this.state.loading} onPress={this.makePayment}>
+                  <Text style={{ color: '#6b0000' }}>Make Payment</Text>
+                </TouchableOpacity>
+              </View>
+
+            </View>     
+             
             }
+               
 
         </View>
       </ScrollView>
@@ -220,14 +229,14 @@ const styles = StyleSheet.create({
   token: {
     color: '#2e2e2e',
     marginTop: 70,
-    position: 'absolute',
-    marginRight: 70
+    alignContent: 'center'
   },
-  paymentButton: {
-    marginTop: 50,
-    position: 'absolute',
-    color: 'black',
-    backgroundColor: 'grey'
+  paymentContent: {
+    position: 'absolute', 
+    marginTop: 50, 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    padding: 10
   }
 });
 

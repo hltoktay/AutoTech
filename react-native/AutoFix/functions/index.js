@@ -23,7 +23,7 @@ exports.completePaymentWithStripe = functions.https.onRequest(
         return null;
       })
       .catch(error => {
-        console.log(errror);
+        console.log(error);
       });
   },
 );
