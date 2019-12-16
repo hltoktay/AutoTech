@@ -106,6 +106,13 @@ class AddPost extends Component {
         valid: false,
         type: "textinput",
         errorMsg: "PHONE NUMBER"
+      },
+      image: {
+        value: "",
+        name: "image",
+        valid: false,
+        type: "textinput",
+        errorMsg: "IMAGEEEEE"
       }
     }
   };
@@ -358,6 +365,9 @@ class AddPost extends Component {
 
             <View style={{backgroundColor: '#f2f2f2', marginBottom: 10 }}>
             <Image 
+             type={this.state.form.image.type}
+             value={this.state.form.image.value}
+             onChangeText={value => this.updateInput("image", value)}
             source={this.state.avatarSource} 
             style={styles.avatar}
             

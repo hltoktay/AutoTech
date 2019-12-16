@@ -76,6 +76,7 @@ class Auth extends Component {
   render() {
     return (
       <ScrollView>
+        <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={35}>
         <View style={styles.container}>
           <Logo
             showLogin={this.showLogin}
@@ -87,6 +88,7 @@ class Auth extends Component {
             platform={this.state.platform}
           />
         </View>
+        </KeyboardAvoidingView>
       </ScrollView>
     );
   }

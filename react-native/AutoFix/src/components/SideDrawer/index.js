@@ -4,15 +4,24 @@ import {
   Image,
   StatusBar,
   ImageBackground,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity,
+  Alert
 } from "react-native";
 import { Container, Content, Text, List, ListItem, Icon } from "native-base";
 
-const routes = ["Home", "SellIt", "MyPost", "Setting", "Logout"];
+import { clearToken } from '../utils/misc'
+
+
+const routes = ["Home", "SellIt", "MyPost", "Setting","LIST NAME ANYTHIGN"];
 
 class SideDrawer extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componenDidMount() {
+    clearToken()
   }
 
   render() {
@@ -46,6 +55,22 @@ class SideDrawer extends React.Component {
               );
             }}
           />
+              <TouchableOpacity onPress={()=>
+              Alert.alert(
+                'Log out',
+                'Do you want to logout?',
+                [
+                  {text: 'Cancel', onPress: () => {return null}},
+                  {text: 'Confirm', onPress: () => {
+                    console.log('TOKEN CLEARED')
+                    this.props.navigation.navigate("Login")
+                  }},
+                ],
+                { cancelable: false }
+              )
+            }>
+              <Text style={{margin: 36,fontWeight: 'bold'}}>Logout</Text>
+            </TouchableOpacity>
       
       </Container>
     );

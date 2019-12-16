@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, Text, Easing, Animated } from "react-native";
+import { Platform, Text, Easing, Animated, View, SafeAreaView, TouchableOpacity, Alert } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
@@ -127,12 +127,14 @@ const DrawerStack = createDrawerNavigator(
     SellIt: { screen: AddPost },
     MyPost: { screen: MyPost },
     Setting: { screen: Screen3 },
-    Logout: { screen: AuthStack }
+    // Logout: { screen: AuthStack }
   },
   {
     contentComponent: props => <SideDrawer {...props} />,
     drawerType: "slide",
     drawerPosition: "left"
+
+  
   }
 );
 

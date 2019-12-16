@@ -9,6 +9,11 @@ import { bindActionCreators } from "redux";
 
 import Modal from "react-native-modal";
 
+import { getOrientation,
+  setOrientationListener,
+  removeOrientationListener,
+  getPlatform} from '../utils/misc'
+
 
 
 class MyPost extends Component {
@@ -17,8 +22,21 @@ class MyPost extends Component {
 
     this.state = {
       posts: [],
-      modal: false
+      modal: false,
+      platform: getPlatform(),
+      orientation: getOrientation(500),
     };
+    setOrientationListener(this.changeOrientation);
+  }
+
+  changeOrientation = () => {
+    this.setState({
+      orientation: getOrientation(500)
+    });
+  };
+
+  UNSAFE_componenDidUnmount() {
+    removeOrientationListener();
   }
 
   componentDidMount() {

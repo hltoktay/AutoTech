@@ -54,6 +54,17 @@ export const setTokens = (values, cb) => {
   });
 };
 
+export const clearToken = (values, cb) => {
+  AsyncStorage.clear([
+    "@AutoTech@token",
+    "@AutoTech@refreshToken",
+    "@AutoTech@expireToken",
+    "@AutoTech@uid"
+  ]).then(value => {
+    cb(value);
+  });
+};
+
 export const gridTwoColumns = list => {
   let newArticles = [];
   let articles = list;
